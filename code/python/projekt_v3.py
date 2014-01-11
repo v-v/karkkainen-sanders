@@ -3,7 +3,7 @@
 #Domagoj Salkovic
 #---------------
 import sys
-import time
+#import time
 
 fastaSeq=0
 charactersFasta=["$","*","-","A","B","C","D","E","F","G","H","I","J",
@@ -176,7 +176,7 @@ def writeToFile(allArray,outputData):
         f.write("\n")
 
 def main():
-    start_time = time.time()
+    #start_time = time.time()
     global fastaSeq
     if len(sys.argv)!=3:
         print "Incorrect number of parameters."
@@ -198,8 +198,8 @@ def main():
         #printSuffixes(suffixArray,seq[:-1])
         allArrays.append(suffixArray)
     writeToFile(allArrays,sys.argv[2])
-    elapsed_time = time.time() - start_time
-    print "Time: ",elapsed_time," sec"
+    #elapsed_time = time.time() - start_time
+    #print "Time: ",elapsed_time," sec"
     #print "-------\nSequence: ",sequence+"$"
 if __name__=="__main__":
     main()
