@@ -22,4 +22,4 @@ getSuffixArray(inputString)
   returns it as a return value.
 
   eg. usage from command line:
-    octave -q --eval "getSuffixArray('BANANA')
+    octave -q --eval "getSuffixArray('BANANA')"

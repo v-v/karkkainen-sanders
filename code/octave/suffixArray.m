@@ -32,14 +32,16 @@ function SA = suffixArray(s, n, K)
 	
 	% three radix sort passes - sorting groups 1 and 2
 	% by their third, second and first character
+	disp('radix');
 	SA12 = radixPass(s12 , SA12, s(3:end), n02, K);
 	s12  = radixPass(SA12, s12,  s(2:end), n02, K);  
 	SA12 = radixPass(s12 , SA12, s(1:end), n02, K);
-
+	disp('end radix');
+	
 	% labeling triplets inside a group
 	name = 0;
 	c0 = c1 = c2 = -1;
-
+	disp('labling');
 	for i = 0:(n02-1)
 		if (s(1+SA12(1+i)) != c0 || s(1+SA12(1+i)+1) ~= c1 || s(1+SA12(1+i)+2) != c2) 
 			name += 1;
@@ -54,7 +56,7 @@ function SA = suffixArray(s, n, K)
 			s12(1+floor(SA12(1+i)/3) + n0) = name; % right part
 		end
 	end % for
-
+	disp('end labling');
 
 	% if we have duplicats then we have to recursively compute the SA of
 	% the given array - if there are no duplicates, we're done
@@ -72,7 +74,8 @@ function SA = suffixArray(s, n, K)
 		end
 
 	end
-	
+
+	disp('sort 1');
 	% using SA12 to sort the first group (% 3 == 0)
 	j = 0;
 	for i = 0:(n02-1)
@@ -82,7 +85,9 @@ function SA = suffixArray(s, n, K)
 		end
 	end
 	SA0 = radixPass(s0, SA0, s, n0, K);
-
+	disp('end sort 1');
+	
+	disp('merge');
 	% merging the suffices of the three groups
 	p = 0;
 	t = n0 - n1;
@@ -134,3 +139,4 @@ function SA = suffixArray(s, n, K)
 	    	end % else
 
 	end % for
+	disp('end merge');

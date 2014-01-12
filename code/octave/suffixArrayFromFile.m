@@ -76,9 +76,12 @@ function suffixArrayFromFile(fileIn, fileOut)
 			% automatically converted to upper case
 			input = upper(input);
 			
-			if min(double(input)) < 'A' || max(double(input)) > 'Z'
-				disp('Invalid character in FASTA format');
-				return;
+			for i = 1:size(input)(2)
+				if double(input(1,i)) < '-' || (   double(input(1,i))   > '-'  && ( double(input(1,i)) < 'A' || double(input(1,i)) > 'Z' ) )
+					disp('Invalid character in FASTA format:');
+					disp(uint8(input(1,i)));
+					return;
+				end
 			end
 			
 			SA = getSuffixArray(input);
@@ -126,9 +129,12 @@ function suffixArrayFromFile(fileIn, fileOut)
 				% lowercase chars are accepted and converted to uppercase
 				input = upper(input);
 				
-				if min(double(input)) < 'A' || max(double(input)) > 'Z'
-					disp('Invalid character in FASTA format');
-					return;
+				for i = 1:size(input)(2)
+					if double(input(1,i)) < '-' || (   double(input(1,i))   > '-'  && ( double(input(1,i)) < 'A' || double(input(1,i)) > 'Z' ) )
+						disp('Invalid character in FASTA format : ');
+						disp(uint8(input(1,i)));
+						return;
+					end
 				end
 				
 				SA = getSuffixArray(input);
@@ -138,8 +144,11 @@ function suffixArrayFromFile(fileIn, fileOut)
 		end
 
 	else  % plain text fileIn (just one array)
+		disp('gotovo ucitavanje');
 		
 		SA = getSuffixArray(input);
+		
+		disp('gotovo racunanje');
 		
 		% we have to test if the output location is writable since
 		% dlmwrite does not return a value but just rises an error

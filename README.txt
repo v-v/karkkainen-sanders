@@ -18,4 +18,4 @@ Python:
 time ./memusg python code/python/projekt_v3.py tests/testBig1000000.txt out.txt
 
 Perl:
-
+time ./memusg perl code/perl/SuffixArrayPretty.pl tests/testBig1000000.txt out.txt
