@@ -56,7 +56,12 @@ public class SuffixArray {
 		// construct the suffix array
 		int[] SA = new int[tripletNumber];		
 		if (notUnique) {
-			SA = constructSuffixArray(lexNameSorted, K);			
+			int maximum = 0;
+			for (int i = 0; i < lexNameSorted.length; i++) {
+				if (lexNameSorted[i] > maximum)
+					maximum = lexNameSorted[i];
+			}
+			SA = constructSuffixArray(lexNameSorted, maximum);			
 		}
 		else {
 			for (int i = 0; i < tripletNumber; i++) {
@@ -92,6 +97,7 @@ public class SuffixArray {
 	 */
 	public static int[] radixSort(int[] s2, int[] index, int tripletNumber, int K, int offset) {
 		int[] c = new int[K+1];
+		System.out.println();
 		int[] result = new int[tripletNumber];
 		for (int i = 0; i < tripletNumber; i++) 
 	      c[s2[index[i] + offset]]++;  
@@ -304,25 +310,27 @@ public class SuffixArray {
 		
 		// check the number of arguments
 		if (args.length != 2) {
-			System.out.println("Ocekivani broj argumenata je 2. Prvi argument predstavlja putanju do ulazne datoteke, a drugi argument do izlazne datoteke.");
+			System.out.println("The number of arguments should be two - the first argument represends the input file and the second arugment represends the output file.");
 			return;
 		}
 		
 		// read data from the file 
 		int sequenceNumber = 0;	
-		BufferedReader br = null;
+		BufferedReader reader = null;
 		String sequence[] = null;
 		boolean fasta = false;
 		try {
-			br = new BufferedReader(new FileReader(args[0]));
-			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
+			reader = new BufferedReader(new FileReader(args[0]));
+			StringBuilder stringBuilder = new StringBuilder();
+			String line = reader.readLine();
+
+			if (line.charAt(0) == '>')
+				fasta = true;
 			
 			// count the number of sequences
-			if (line.charAt(0) == '>') fasta = true;
 			while (line != null) {
 				if (fasta == true && line.charAt(0) == '>') sequenceNumber++;
-				line = br.readLine();	
+				line = reader.readLine();	
 			}
 			
 			if (sequenceNumber == 0)
@@ -332,33 +340,33 @@ public class SuffixArray {
 			// read all sequences
 			boolean firstLine = true;
 			sequenceNumber = 0;
-			br = new BufferedReader(new FileReader(args[0]));
-			line = br.readLine();
+			reader = new BufferedReader(new FileReader(args[0]));
+			line = reader.readLine();
 
 			if (fasta == true) {
 				while (line != null) {
 					if (line.charAt(0) == '>' && firstLine == false) {
-						sequence[sequenceNumber] = sb.toString();
-						sb = new StringBuilder();
+						sequence[sequenceNumber] = stringBuilder.toString();
+						stringBuilder = new StringBuilder();
 						sequenceNumber++;
 					} else if (line.charAt(0) != '>'){
-						sb.append(line);
+						stringBuilder.append(line);
 					}
-					line = br.readLine();
+					line = reader.readLine();
 					firstLine = false;
 				}
 
 			} else {
 				while (line != null) {
-					sb.append(line);
-					line = br.readLine();	
+					stringBuilder.append(line);
+					line = reader.readLine();	
 				}									
 			}
-			sequence[sequenceNumber] = sb.toString();
-			br.close();	
+			sequence[sequenceNumber] = stringBuilder.toString();
+			reader.close();	
 
 		} catch (FileNotFoundException e) {
-			System.out.println("Ne postoji navedena ulazna datoteka.");
+			System.out.println("The input file doesn't exist.");
 			return;
 		} catch (Exception e)  {
 			e.printStackTrace();
@@ -368,18 +376,21 @@ public class SuffixArray {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(args[1]));	
 			for (int i = 0; i < sequence.length; i++) {
-				String a = sequence[i];
+				String seq = sequence[i];
 				if (fasta == true) {
-					a = a.toUpperCase();
-					for (int j = 0; j < a.length(); j++) {
-						if (!((a.charAt(j) >= 'A' && a.charAt(j) <= 'Z') || a.charAt(j) == '-')) {
-							System.out.println("Nije ispravan FASTA format.");
+					seq = seq.toUpperCase();
+					// check if all characters in FASTA format are allowed
+					for (int j = 0; j < seq.length(); j++) {
+						if (!((seq.charAt(j) >= 'A' && seq.charAt(j) <= 'Z') || (seq.charAt(j) >= '0' && seq.charAt(j) <= '9') || seq.charAt(j) == '-' || seq.charAt(j) == '*')) {
+							System.out.println("Not correct FASTA format.");
 							return;
 						}						
-					}
+					}					
+					// remove digits					
+					seq = seq.replaceAll("[0-9]", "");					
 				}
 
-				char[] chars = a.toCharArray();
+				char[] chars = seq.toCharArray();
 				int[] s = new int[chars.length];
 				int minimum = 256;
 				for (int j = 0; j< chars.length; j++) {
@@ -389,14 +400,16 @@ public class SuffixArray {
 				}
 				int maximum = 0;
 				for (int j = 0; j< chars.length; j++) {
-					s[j] = chars[j] + 2 - minimum;
-					if (s[j] > maximum) 
-						maximum = s[j];					
+					s[j] = chars[j] + 2 - minimum;		
+					if (s[j] > maximum)
+						maximum = s[j];
 				}
 				
+				// calculate suffix array
 				int[] suffixArray = new int[chars.length];
 				suffixArray = constructSuffixArray(s, maximum);	
 				
+				// write  suffix array to output file
 				for (int j = 0; j < suffixArray.length; j++)
 					writer.write(suffixArray[j] + " ");	
 				writer.write("\n");
@@ -407,3 +420,4 @@ public class SuffixArray {
 		}
 	}	
 }
+
