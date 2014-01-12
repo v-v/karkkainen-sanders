@@ -97,7 +97,6 @@ public class SuffixArray {
 	 */
 	public static int[] radixSort(int[] s2, int[] index, int tripletNumber, int K, int offset) {
 		int[] c = new int[K+1];
-		System.out.println();
 		int[] result = new int[tripletNumber];
 		for (int i = 0; i < tripletNumber; i++) 
 	      c[s2[index[i] + offset]]++;  
