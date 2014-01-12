@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 
 /*
  * Linear time suffix array construction
@@ -367,8 +368,9 @@ public class SuffixArray {
 		} catch (FileNotFoundException e) {
 			System.out.println("The input file doesn't exist.");
 			return;
-		} catch (Exception e)  {
-			e.printStackTrace();
+		} catch (IOException e)  {
+			System.out.println("The problem occured while reading from file.");
+			return;
 		}
 		
 		// calculate the suffix array of each sequence and write it to the file 
@@ -414,8 +416,9 @@ public class SuffixArray {
 				writer.write("\n");
 			}
 			writer.close();
-		} catch(Exception e) {
-			e.printStackTrace();
+		} catch(IOException e) {
+			System.out.println("The problem occured while writing to file.");
+			return;
 		}
 	}	
 }
