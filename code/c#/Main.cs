@@ -226,78 +226,63 @@ namespace Bioinflabos
 			return max;
 		}
 		
-		public static void fill(int[] a, int fromIndex, int toIndex, int val)
-		{
-			for (int i = fromIndex; i < toIndex; i++)
-				a[i] = val;
-		}
 		//function that converts string to integer array, keeping alphabetic order
 		public static int[] convertStringToArrayInt(string s, int type)
 		{
 
 			int length = s.Length;
 			
-			List<char> characters = new List<char>();
-			bool shorter = false;
-			
-			//number of different characters
-			int number = 0;
-			
 			int[] returnArray = new int[length+1];
-			if (type ==1)
+			
+			if (type ==1) //if type is FASTA
 			{
-				s = s.ToUpper();
-
+				//convert characters to upper
+				s = s.ToUpper(); 
 				
+				// put $ char on the end of array
 				returnArray[length] = 1;
+				
 				for (int i = 0; i<length; i++)
 				{
-				
-				
+					//in FASTA only can be letters from A to Z, char '-' and '*'
 					if (!((s[i]>='A' && s[i] <='Z') || s[i] == '-' || s[i]=='*') ){
 						throw new Exception("Wrong format!");
 					}
-
-				
+					
+					//convert chat to int
 					returnArray[i] =Convert.ToInt32( s[i]);
-				
-				}
-
-				
-				
+				}	
 			}
-			else
-			
+			else //type is plain text		
 			{
-			
+				// put $ char on the end of array
 				returnArray[length] = 1;
+				
 				for (int i = 0; i < length ; i++)
 				{
+					//convert chat to int
 					returnArray[i] =Convert.ToInt32( s[i]);
 				}
-;
+
 			}
-			return returnArray;
-			
-		
-			
-			
-			
+			return returnArray;		
 		}
 		public static void Main (string[] args)
 		{
-			Console.WriteLine(DateTime.Now);
+			
 			try{
 				//path to input document
 				string inputDocument = args[0];			
 				
 				//path to output document
 				string outputDocument = args[1];
-
+				
+				//all lines from document
 				string[] lines = System.IO.File.ReadAllLines(@inputDocument);
 				
 				int type=0; // 1 za FASTU, 2 za plain
-
+				
+				//list for sequences
 				List<string> sequences =  new List<string>();
 				if (lines[0].Substring(0,1).Equals(";") || lines[0].Substring(0,1).Equals(">")) //FASTA
 				{
@@ -354,60 +339,49 @@ namespace Bioinflabos
 					}
 					sequences.Add(plainString);
 				}
+				
+				//output document
 				StreamWriter writer = File.CreateText(@outputDocument);
-				//System.IO.File.Delete(@outputDocument);
-
+				
+				//for every sequence make suffix array and write it in output document
 				for (int i = 0; i < sequences.Count; i++) {
 					
-					
 					string str =sequences[i];
-		
+					
+					//convert string to int array
 					int[] sIn = convertStringToArrayInt(str, type);
 					
-
 					int start = 0;
 					int length = sIn.Length;
 					
 					int[] end = new int[3]{0,0,0};
-					
 					int[] SA = new int[length + 3];
+					
 					int alphabetSize = max (sIn, start, length);
 					
 					int[] s = new int[length+3];
+					
+					//put 3 zeros on the end of array
 					Array.Copy(sIn, 0, s, 0, length);
 					Array.Copy(end, 0, s, length,3);
 					
-
+					//find suffix array
 					suffixArray(s, SA, length, alphabetSize, start);
 					
-
-					//string output="";
 					int len = SA.Length-3;
 					
+					//write suffix array in output document
 					for (int j = 1; j < len; j++) {
-							writer.Write(SA[j]);
-							writer.Write(" ");
-							//output =output + SA[j].ToString();
-						
-						
+						writer.Write(SA[j]);
+						writer.Write(" ");					
 					}
-					writer.Write("\n");
-					
-//					int[] suffix = new int[SA.Length-4];
-//					Array.Copy(SA, 1, suffix, 0, SA.Length-4);
-
-//					System.IO.File.AppendAllText(@outputDocument, output);
-//					System.IO.File.AppendAllText(@outputDocument, "\n");
-
-				
+					writer.Write("\n");				
 			}
 				writer.Close();
 			}
 			catch (Exception e){
 				Console.WriteLine(e);	
-			}
-			Console.WriteLine(DateTime.Now);
-			
+			}			
 		}
 	}
 }
