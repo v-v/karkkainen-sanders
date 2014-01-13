@@ -27,13 +27,13 @@ Tests:
 ------
 
 There are 3 examples of the deprecated FASTA format that this code supports. This includes
-accepting multiple sequences, * that can be set (but is not mandatory at the end of the
-sequence and so on).
+accepting multiple sequences, * that can be set (but is not mandatory) at the end of the
+sequence and so on.
 
 Example:
 
-Assuming everything is run from this current directory (if not add --path argument before
--- eval)
+Assuming everything is run from this current directory (if not, add --path argument before
+--eval)
 
 octave -q --eval "suffixArrayFromFile('test-deprecated-fasta3.txt', 'out.txt')
 
