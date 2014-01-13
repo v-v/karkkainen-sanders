@@ -29,9 +29,9 @@ About tests:
 testsBigXYZ.txt
 - are tests of XYZ uniformly sampled random characters.
 - They are used for testing the speeds and memory usages of the various
-  implementations (time(1) and the script memusg are used for so)
+  implementations (time(1) and the script memusg were used to do so)
 
 test1.txt and test2.txt
-- They tests the algorithms for correct output given a FASTA input
-- the output of the program shell be compared to output1.txt or
+- They test the algorithms for correct output given a FASTA input
+- The output of the programs shell be compared to output1.txt or
   output2.txt accordingly.
