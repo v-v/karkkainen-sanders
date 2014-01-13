@@ -2,8 +2,6 @@ Karkkainen-Sanders suffix array generation in O(n)
 
 Octave version
 
-copyright (C) 2014  Vedran Vukotic
-
 
 Functions:
 
@@ -14,7 +12,7 @@ suffixArrayFromFile(inFile, outFile)
   outFile.
 
   eg. usage from command line:
-    octave -q --eval "suffixArrayFromFile('../../tests/test1.txt', '../../tests/out.txt')"
+    octave -q --eval "suffixArrayFromFile('../../tests/test1.txt', 'out.txt')"
 
 
 getSuffixArray(inputString)
@@ -23,3 +21,6 @@ getSuffixArray(inputString)
 
   eg. usage from command line:
     octave -q --eval "getSuffixArray('BANANA')"
+
+
+Please refer to the README.txt in the main directory for more read to c/p usage examples

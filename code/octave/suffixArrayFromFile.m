@@ -2,6 +2,9 @@
 % fileIn     - path to input file name (plain text or FASTA (determined by format, not extension)
 % fileOut - path to output file name where the SA(s) is/are written
 
+% Both the current FASTA standard and some deprecated features are supported (like multiple entries)
+% please refer to the README in the main directory for more details and usage examples
+
 function suffixArrayFromFile(fileIn, fileOut)
 	% FASTA supports multiple entries, so if we detect it, they're all stored
 	% together with their identifier (given after ">")  for later processing
@@ -144,11 +147,9 @@ function suffixArrayFromFile(fileIn, fileOut)
 		end
 
 	else  % plain text fileIn (just one array)
-		disp('gotovo ucitavanje');
 		
 		SA = getSuffixArray(input);
 		
-		disp('gotovo racunanje');
 		
 		% we have to test if the output location is writable since
 		% dlmwrite does not return a value but just rises an error

@@ -10,7 +10,6 @@
 % Note: the termination character is the lowest of the alphabet
 
 function res = getSuffixArray(in)
-	disp('pretvaram u integer');
 	len = size(in)(2);
 
 	% convert the string to an array of integers
@@ -58,7 +57,6 @@ function res = getSuffixArray(in)
 		sn(len+2:len+4) = 0;
 
 
-		disp('generiram SA');
 		
 		% ucomment this if you want the
 		% termination char  to be included
