@@ -17,7 +17,7 @@ C#:
 code/c#/Bioinf-labos.exe tests/test1.txt out.txt
 
 Python:
-python code/python/projekt_v3.py tests/test1.txt out.txt
+python code/python/projekt_v4.py tests/test1.txt out.txt
 
 Perl:
 perl code/perl/SuffixArrayAgain.pl tests/test1.txt out.txt
