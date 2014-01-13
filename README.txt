@@ -35,10 +35,3 @@ test1.txt and test2.txt
 - They tests the algorithms for correct output given a FASTA input
 - the output of the program shell be compared to output1.txt or
   output2.txt accordingly.
-
-test-deprecated-fastaX.txt
-- Those tests are for some deprecated FASTA features like supporting 
-  multiple entries in one file, comments, possibility of * indicating
-  a termination character in the end etc.
-- Please not that only the octave version supports this.
-- Eg: octave -q --path code/octave/ --eval "suffixArrayFromFile('tests/test-deprecated-fasta3.txt', 'out.txt')"

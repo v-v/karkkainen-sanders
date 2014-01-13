@@ -23,4 +23,20 @@ getSuffixArray(inputString)
     octave -q --eval "getSuffixArray('BANANA')"
 
 
-Please refer to the README.txt in the main directory for more read to c/p usage examples
+Tests:
+------
+
+There are 3 examples of the deprecated FASTA format that this code supports. This includes
+accepting multiple sequences, * that can be set (but is not mandatory at the end of the
+sequence and so on).
+
+Example:
+
+Assuming everything is run from this current directory (if not add --path argument before
+-- eval)
+
+octave -q --eval "suffixArrayFromFile('test-deprecated-fasta3.txt', 'out.txt')
+
+
+Please refer to the README.txt in the main directory for more ready to c/p usage examples
+and tests from the tests/ directory.
