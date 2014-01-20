@@ -374,7 +374,7 @@ sub doRegular
 	push @n0, 0;
 	push @n1, 0;
 	$max = 0;
-	find the maximum value in the input string
+	#find the maximum value in the input string
 	for $i (@{$s[0]})
 	{
 		#only printable characters and whitespace are allowed in the plain text
